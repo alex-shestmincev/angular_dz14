@@ -1,6 +1,32 @@
 
 <h1>Input</h1>
-{{some}}
-<input type="text" ng-model="some" jb-mask="99:99"/>
 
+<p>
+<input type="text" ng-model="some" jb-mask="99:99"/>
 <input type="submit" ng-click="some = '1235'"/>
+    mask = "99:99" <br>
+    {{some}}
+</p>
+
+<p>
+    <input type="text" ng-model="some2" jb-mask="99 99"/>
+    mask = "99 99" <br>
+    {{some2}}
+</p>
+
+<p>
+    <input type="text" ng-model="some3" jb-mask="(999) 999-99-99"/>
+    mask = "(999) 999-99-99" <br>
+    {{some3}}
+</p>
+
+<p>
+    <input type="text" ng-model="some4" jb-mask="(aaa) 999-99-99"/>
+    mask = "(aaa) 999-99-99" <br>
+    {{some4}}
+</p>
+
+
+
+<br/>
+
