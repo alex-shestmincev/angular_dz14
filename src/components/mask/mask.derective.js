@@ -1,4 +1,4 @@
-angular.module('myProject').directive('jbMask',function($compile){
+angular.module('myProject').directive('jbMask',function(){
   return {
     priority: 11,
     restrict: 'A',
