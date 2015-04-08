@@ -3,29 +3,46 @@
 
 <p>
 <input type="text" ng-model="some" jb-mask="99:99"/>
-<input type="submit" ng-click="some = '1235'"/>
+    <input type="submit" value="1235" ng-click="some = '1235'"/>
+    <input type="submit" value="12:35" ng-click="some = '12:35'"/>
     mask = "99:99" <br>
     {{some}}
 </p>
 
 <p>
     <input type="text" ng-model="some2" jb-mask="99 99"/>
+    <input type="submit" value="12 35" ng-click="some2 = '12 35'"/>
+    <input type="submit" value="1235" ng-click="some2 = '1235'"/>
+    <input type="submit" value="12:35" ng-click="some2 = '12:35'"/>
     mask = "99 99" <br>
     {{some2}}
 </p>
 
 <p>
     <input type="text" ng-model="some3" jb-mask="(999) 999-99-99"/>
+    <input type="submit" value="(095) 123-45-67" ng-click="some3 = '(095) 123-45-67'"/>
+    <input type="submit" value="8(095) 123-45-67" ng-click="some3 = '8(095) 123-45-67'"/>
+    <input type="submit" value="8(095) 123-45-67" ng-click="some3 = '(095) 123-45-675'"/>
     mask = "(999) 999-99-99" <br>
     {{some3}}
 </p>
 
 <p>
     <input type="text" ng-model="some4" jb-mask="(aaa) 999-99-99"/>
+    <input type="submit" value="(sdf) 123-45-67" ng-click="some4 = '(sdf) 123-45-67'"/>
+    <input type="submit" value="(095) 123-45-67" ng-click="some4 = '(095) 123-45-67'"/>
     mask = "(aaa) 999-99-99" <br>
     {{some4}}
 </p>
 
+<p>
+    <input type="text" ng-model="some5" jb-mask="(aa:99)"/>
+    <input type="submit" value="(df:45)" ng-click="some5 = '(df:45)'"/>
+    <input type="submit" value="(11:45)" ng-click="some5 = '(11:45)'"/>
+    <input type="submit" value="bg:48" ng-click="some5 = 'bg:48'"/>
+    mask = "(aa:99)" <br>
+    {{some5}}
+</p>
 
 
 <br/>

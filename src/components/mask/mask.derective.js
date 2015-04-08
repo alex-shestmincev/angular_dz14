@@ -13,12 +13,9 @@ angular.module('myProject').directive('jbMask',function($compile){
     link: function($scope, $element, $attr, ngModelCtrl){
 
       var maskAttr = $attr.jbMask;
-      var separator = maskAttr.indexOf(":");
 
       var isValid = function(data){
-        console.log(data);
         var mask = maskAttr;
-
 
         if (data.length !== mask.length){
           return false;
@@ -28,7 +25,6 @@ angular.module('myProject').directive('jbMask',function($compile){
           if (data[i] === mask[i]){
             continue;
           }else if(data[i].match(/[0-9]/)){
-
             if (mask[i] !== '9'){
               return false;
             }
@@ -41,16 +37,13 @@ angular.module('myProject').directive('jbMask',function($compile){
           }
         }
 
-        data = data.split(':').join('');
-
-        console.log(data + ' = true');
         return data;
       }
+      ngModelCtrl.$parsers.push(isValid);
 
+      // Следим за операциями над input и удаляем лишнее или дописываем константы из маски
       $element.bind('input keyup click focus', function(event) {
-        console.log('start');
-        var sep = separator,
-          caretPos = getCaretPosition(this),
+        var caretPos = getCaretPosition(this),
           mask = maskAttr,
           val = $element.val();
 
@@ -58,30 +51,32 @@ angular.module('myProject').directive('jbMask',function($compile){
         var char = val[charPos];
 
         if (char) {
-          console.log(char);
-          if (char === mask[charPos]) { console.log('step 1');
-
-          } else if (char.match(/[0-9]/)) { console.log('step 2');
-            if (mask[charPos] !== '9') {console.log('step 2.1');
+          if (char === mask[charPos]) {
+            //it's ok
+          } else if (char.match(/[0-9]/)) {
+            if (mask[charPos] !== '9') {
               deleteChar(charPos);
-            }console.log('step 2.2');
-          } else if (char.match(/[a-z]/i)) { console.log('step 3');
+            }
+          } else if (char.match(/[a-z]/i)) {
             if (mask[charPos] !== 'a') {
               deleteChar(charPos);
             }
-          } else { console.log('step 4');
+          } else {
             deleteChar(charPos);
           }
         }
 
+        // Вставка статического символа из маски
         if (mask[caretPos] && mask[caretPos] !== '9' && mask[caretPos] !== 'a'){
-            arr = val.split("");
+          arr = val.split("");
+          if (arr[caretPos] !== mask[caretPos]) {
             arr.splice(caretPos, 0, mask[caretPos]);
             $element.val(arr.join(""));
-
+          }
         }
       });
 
+      // Удаление символа, не соответствующего маске
       function deleteChar(position){
         var val = $element.val();
         arr = val.split("");
@@ -94,6 +89,7 @@ angular.module('myProject').directive('jbMask',function($compile){
 
       }
 
+      // функция, вычисляющая позицию каретки (содрана из ui-mask)
       function getCaretPosition(input){
         if (!input) return 0;
         if (input.selectionStart !== undefined) {
@@ -108,25 +104,20 @@ angular.module('myProject').directive('jbMask',function($compile){
         return 0;
       }
 
-      ngModelCtrl.$parsers.push(isValid);
-
-
       var formatter = function(data) {
 
         if (!data){
           return '';
         }
-        console.log(data);
         var mask = maskAttr;
 
+        if(data.length !== mask.length){
+          return '';
+        }
 
         var res = '';
         for (var i= 0, j=0; i < mask.length; i++, j++){
-
-          if (mask[i] === ':') {
-            j--;
-            res += ':';
-          }else if(mask[i] === data[j]){
+          if(mask[i] === data[j]){
             res += data[j];
           }else if(mask[i] === '9'){
             if (data[j] && data[j].match(/[0-9]/)){
@@ -140,16 +131,14 @@ angular.module('myProject').directive('jbMask',function($compile){
             }else{
               return '';
             }
+          }else{
+            return '';
           }
         }
 
         return res;
       }
       ngModelCtrl.$formatters.push(formatter);
-
-
-
-
     }
   };
 });
